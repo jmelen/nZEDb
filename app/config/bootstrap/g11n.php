@@ -21,7 +21,7 @@ use lithium\util\Validator;
 use lithium\net\http\Media;
 use lithium\action\Dispatcher as ActionDispatcher;
 use lithium\console\Dispatcher as ConsoleDispatcher;
-use RuntimeException;
+//use RuntimeException;
 
 /**
  * Dates
