@@ -125,4 +125,19 @@ Libraries::add('app', array('default' => true));
 // 	Libraries::add(basename($path), array('path' => $path));
 // }
 
+if (!defined('DS')) {
+	define('DS', DIRECTORY_SEPARATOR);
+}
+
+/**
+ * Add some plugins:
+ */
+if (is_dir(LITHIUM_LIBRARY_PATH . DS . 'li3_docs')) {
+	Libraries::add('li3_docs');
+}
+
+if (is_dir(LITHIUM_LIBRARY_PATH . DS . 'li3_quality')) {
+	Libraries::add('li3_quality');
+}
+
 ?>
