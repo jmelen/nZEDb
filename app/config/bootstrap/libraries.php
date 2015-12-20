@@ -63,8 +63,8 @@ define('LITHIUM_APP_PATH', dirname(dirname(__DIR__)));
  * directory as your application.  If you use the same libraries in multiple applications, you can
  * set this to a shared path on your server.
  * Enable ONE of the following defines to point at the location for libraries. Use the first if you
- * will hold all libraries within the app, or the second to use global libraries shared by multiple
- * apps.
+ * will hold all libraries within the app (as composer would), or the second to use global libraries
+ * (manual configuration required) shared by multiple apps.
  */
 //define('LITHIUM_LIBRARY_PATH', dirname(LITHIUM_APP_PATH)) . DS . 'libraries');
 define('LITHIUM_LIBRARY_PATH', dirname(dirname(LITHIUM_APP_PATH)) . DS . 'libraries');
@@ -137,7 +137,7 @@ Libraries::add('app', array('default' => true));
  * Add some plugins:
  */
 if (is_dir(LITHIUM_LIBRARY_PATH . DS . 'li3_docs')) {
-	Libraries::add('li3_docs');
+	Libraries::add('li3_docs', ['index' => ['app']]);
 }
 
 if (is_dir(LITHIUM_LIBRARY_PATH . DS . 'li3_quality')) {
