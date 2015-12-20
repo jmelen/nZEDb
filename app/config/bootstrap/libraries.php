@@ -46,6 +46,10 @@
  * @see lithium\core\Libraries
  */
 
+if (!defined('DS')) {
+	define('DS', DIRECTORY_SEPARATOR);
+}
+
 /**
  * This is the path to your application's directory.  It contains all the sub-folders for your
  * application's classes and files.  You don't need to change this unless your webroot folder is
@@ -62,8 +66,8 @@ define('LITHIUM_APP_PATH', dirname(dirname(__DIR__)));
  * will hold all libraries within the app, or the second to use global libraries shared by multiple
  * apps.
  */
-//define('LITHIUM_LIBRARY_PATH', dirname(LITHIUM_APP_PATH)) . DIRECTORY_SEPARATOR . 'libraries');
-define('LITHIUM_LIBRARY_PATH', dirname(dirname(LITHIUM_APP_PATH)) . DIRECTORY_SEPARATOR . 'libraries');
+//define('LITHIUM_LIBRARY_PATH', dirname(LITHIUM_APP_PATH)) . DS . 'libraries');
+define('LITHIUM_LIBRARY_PATH', dirname(dirname(LITHIUM_APP_PATH)) . DS . 'libraries');
 
 /**
  * Locate and load Lithium core library files.  Throws a fatal error if the core can't be found.
@@ -128,10 +132,6 @@ Libraries::add('app', array('default' => true));
 // foreach (glob($pattern, GLOB_BRACE | GLOB_ONYLDIR) as $path) {
 // 	Libraries::add(basename($path), array('path' => $path));
 // }
-
-if (!defined('DS')) {
-	define('DS', DIRECTORY_SEPARATOR);
-}
 
 /**
  * Add some plugins:
