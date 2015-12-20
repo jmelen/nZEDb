@@ -58,8 +58,12 @@ define('LITHIUM_APP_PATH', dirname(dirname(__DIR__)));
  * Lithium core.  By default, this directory is named `libraries`, and resides in the same
  * directory as your application.  If you use the same libraries in multiple applications, you can
  * set this to a shared path on your server.
+ * Enable ONE of the following defines to point at the location for libraries. Use the first if you
+ * will hold all libraries within the app, or the second to use global libraries shared by multiple
+ * apps.
  */
-define('LITHIUM_LIBRARY_PATH', dirname(dirname(LITHIUM_APP_PATH)) . '/libraries');
+//define('LITHIUM_LIBRARY_PATH', dirname(LITHIUM_APP_PATH)) . DIRECTORY_SEPARATOR . 'libraries');
+define('LITHIUM_LIBRARY_PATH', dirname(dirname(LITHIUM_APP_PATH)) . DIRECTORY_SEPARATOR . 'libraries');
 
 /**
  * Locate and load Lithium core library files.  Throws a fatal error if the core can't be found.
