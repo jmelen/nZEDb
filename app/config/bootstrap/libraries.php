@@ -46,16 +46,12 @@
  * @see lithium\core\Libraries
  */
 
-if (!defined('DS')) {
-	define('DS', DIRECTORY_SEPARATOR);
-}
-
 /**
  * This is the path to your application's directory.  It contains all the sub-folders for your
  * application's classes and files.  You don't need to change this unless your webroot folder is
  * stored outside of your app folder.
  */
-define('LITHIUM_APP_PATH', dirname(dirname(__DIR__)));
+define('LITHIUM_APP_PATH', realpath(dirname(dirname(__DIR__))));
 
 /**
  * This is the path to the class libraries used by your application, and must contain a copy of the
@@ -67,7 +63,7 @@ define('LITHIUM_APP_PATH', dirname(dirname(__DIR__)));
  * (manual configuration required) shared by multiple apps.
  */
 //define('LITHIUM_LIBRARY_PATH', dirname(LITHIUM_APP_PATH)) . DS . 'libraries');
-define('LITHIUM_LIBRARY_PATH', dirname(dirname(LITHIUM_APP_PATH)) . DS . 'libraries');
+define('LITHIUM_LIBRARY_PATH', realpath(dirname(dirname(LITHIUM_APP_PATH)) . DS . 'libraries'));
 
 /**
  * Locate and load Lithium core library files.  Throws a fatal error if the core can't be found.
@@ -143,5 +139,8 @@ if (is_dir(LITHIUM_LIBRARY_PATH . DS . 'li3_docs')) {
 if (is_dir(LITHIUM_LIBRARY_PATH . DS . 'li3_quality')) {
 	Libraries::add('li3_quality');
 }
+
+define('nZEDb', realpath(dirname(LITHIUM_APP_PATH) . DS . 'nzedb'));
+//Libraries::add('nZEDb', ['path' => nZEDb])
 
 ?>
