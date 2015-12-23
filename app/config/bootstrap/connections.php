@@ -74,7 +74,7 @@ use lithium\data\Connections;
 // ));
 
 $config1 = LITHIUM_APP_PATH . DS . 'config' . DS . 'db-config.php';
-$config2 = LITHIUM_APP_PATH . DS . '..' . DS . 'nzedb' . DS . 'config' . DS . 'config.php';
+$config2 = nZEDb . DS . 'config' . DS . 'config.php';
 $config  = file_exists($config1) ? $config1 : $config2;
 
 if (file_exists($config)) {
@@ -92,32 +92,32 @@ if (file_exists($config)) {
 
 	if (isset($adapter)) {
 		Connections::add('default',
-						 [
-							 'type'       => 'database',
-							 'adapter'    => $adapter,
-							 'host'       => DB_HOST,
-							 'port'       => DB_PORT,
-							 'login'      => DB_USER,
-							 'password'   => DB_PASSWORD,
-							 'database'   => DB_NAME,
-							 'encoding'   => 'UTF-8',
-							 'persistent' => false
-						 ]
+			[
+				'type'       => 'database',
+				'adapter'    => $adapter,
+				'host'       => DB_HOST,
+				'port'       => DB_PORT,
+				'login'      => DB_USER,
+				'password'   => DB_PASSWORD,
+				'database'   => DB_NAME,
+				'encoding'   => 'UTF-8',
+				'persistent' => false
+			]
 		);
 	}
 } else {
-	//throw new ErrorException("Couldn't open nZEDb's configuration file!");
+	/** throw new ErrorException("Couldn't open nZEDb's configuration file!"); */
 	Connections::add('default',
-					 [
-						 'type'     => 'database',
-						 'adapter'  => 'Mock',
-						 'host'     => 'localhost',
-						 'port'     => '3306',
-						 'login'    => 'root',
-						 'password' => 'root_pass',
-						 'database' => 'nZEDb',
-						 'encoding' => 'UTF-8'
-					 ]
+		[
+			'type'     => 'database',
+			'adapter'  => 'Mock',
+			'host'     => 'localhost',
+			'port'     => '3306',
+			'login'    => 'root',
+			'password' => 'root_pass',
+			'database' => 'nZEDb',
+			'encoding' => 'UTF-8'
+		]
 	);
 }
 
