@@ -443,7 +443,6 @@ class Misc
 	 */
 	public static function fileInfo($path)
 	{
-		$output = '';
 		$magicPath = (new Settings())->getSetting('apps.indexer.magic_file_path');
 		if (self::hasCommand('file') && (!self::isWin() || !empty($magicPath))) {
 			$magicSwitch = empty($magicPath) ? '' : " -m $magicPath";
@@ -465,13 +464,13 @@ class Misc
 				$output = '';
 			}
 		} else {
-			$fileInfo = empty($magicPath) ? new \finfo(FILEINFO_RAW) : new \finfo(FILEINFO_RAW, $magicPath);
+			$fileInfo = empty($magicPath) ? finfo_open(FILEINFO_RAW) : finfo_open(FILEINFO_RAW, $magicPath);
 
-			$output = $fileInfo->file($path);
+			$output = finfo_file($fileInfo, $path);
 			if (empty($output)) {
 				$output = '';
 			}
-			$fileInfo->close();
+			finfo_close($fileInfo);
 		}
 
 		return $output;
@@ -685,5 +684,75 @@ class Misc
 		}
 
 		return $sent;
+	}
+
+	/**
+	 * Display error/error code.
+	 * @param int    $errorCode
+	 * @param string $errorText
+	 */
+	public static function showApiError($errorCode = 900, $errorText = '')
+	{
+		if ($errorText === '') {
+			switch ($errorCode) {
+				case 100:
+					$errorText = 'Incorrect user credentials';
+					break;
+				case 101:
+					$errorText = 'Account suspended';
+					break;
+				case 102:
+					$errorText = 'Insufficient privileges/not authorized';
+					break;
+				case 103:
+					$errorText = 'Registration denied';
+					break;
+				case 104:
+					$errorText = 'Registrations are closed';
+					break;
+				case 105:
+					$errorText = 'Invalid registration (Email Address Taken)';
+					break;
+				case 106:
+					$errorText = 'Invalid registration (Email Address Bad Format)';
+					break;
+				case 107:
+					$errorText = 'Registration Failed (Data error)';
+					break;
+				case 200:
+					$errorText = 'Missing parameter';
+					break;
+				case 201:
+					$errorText = 'Incorrect parameter';
+					break;
+				case 202:
+					$errorText = 'No such function';
+					break;
+				case 203:
+					$errorText = 'Function not available';
+					break;
+				case 300:
+					$errorText = 'No such item';
+					break;
+				case 500:
+					$errorText = 'Request limit reached';
+					break;
+				case 501:
+					$errorText = 'Download limit reached';
+					break;
+				default:
+					$errorText = 'Unknown error';
+					break;
+			}
+		}
+
+		$response =
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" .
+			'<error code="' . $errorCode .  '" description="' . $errorText . "\"/>\n";
+		header('Content-type: text/xml');
+		header('Content-Length: ' . strlen($response) );
+		header('X-nZEDb: API ERROR [' . $errorCode . '] ' . $errorText);
+
+		exit($response);
 	}
 }

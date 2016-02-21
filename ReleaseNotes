@@ -1,7 +1,135 @@
 This file details which changes to the code are in which release version. It is a complement to the ChangeLog file which list *when* changes are made to the dev branch.
 
+0.5.4 2016-03-07
+Added:
 
-0.5.1 2015-11-03
+Changed:
+	* Update isISO categorization (PR 2040).
+	* Juggle Book category values so they match the existing ones of newznab's published API.
+
+Fixed:
+	* Prevent undefined index notices in full series and movies view, remove references to
+	 nzbvortex and nzbgetintegration (PR 2039).
+
+
+0.5.3 2016-02-01
+Added:
+	* A function to return the CAT_OTHERS_GROUP, as array constants are not supported for PHP 5.5.
+		When 5.5 reaches EOL in July we can revisit this.
+
+Changed:
+	* Bring in dev-git-hooks changes. Adds whitespace checking/fixing to pre-commit hook (for
+	  devs only).
+	* Update getID3 library to version 1.9.11.
+	* Moved Other cats to 0000 range, books cat to 7000 range. This will allow 3rd. party apps to
+	  use the newznab category values with the API.
+
+Fixed:
+	* Fixed paths in  Charisma/Omicron themes (PR 2012).
+	* Added missing template file, to Default theme, which caused 500 error when clicking on movie
+	  title in covers view.
+	* Remove duplicate menu items for Login and Register in menu_items.tsv.
+	* In some cases, when not logged in, no theme is defined and certain links are broken with
+	  themes//style... appearing instead of a proper link.
+	* Several bad URLs in Charisma/Gamma/Omicron themes (missing '/' after the smarty constants).
+	* Fix wrong path to shared folder in Gamma theme.
+
+
+0.5.2 2016-01-04
+Added:
+	* Add Gamma template made by RickDB (adapted by Darius) (PR 1987).
+	* Adding noscript support to recaptcha (Default theme only, update custom themes that do not
+	  use it) (PR 2005).
+
+Changed:
+	* Add Trakt Support (PR 1985)
+	* TVDB and TVMaze scripts now support Airdate lookup.
+	* Change COUNT(*) queries to count the primary key columns to improve query performance.
+	* Re-work the count querying in PreDB class.
+	* Greatly improve CodecPoster accuracy and query speed.
+	* DNZB failures shouldn't send an easily corrupted searchname.  Now retrieves it from the DB by sent guid instead.
+	* Refactored our themes. This moves the themes_shared directory to themes/shared.
+		More importantly it now assumes a convention that themes should use Title cased names or
+	  they are not presented as available selections.
+		 Admins may rename the directory of any theme they want to omit from user choice to be
+	  fully lower-case (the change must be commited to prevent overwriting by next update).
+		 This change will be the basis for further improvements in time.
+	* Change grabs and group browse ordering in Gamma theme (PR 2007).
+
+Fixed:
+	* Column genre_id in gamesinfo table, not patched when schema was updated around patch 278.
+	* Omicron/Charisma movie cover links.
+	* Wrong paths in Omicron/Charisma templates (PR 1995).
+	* Paths to scripts in Charisma/Omicron themes (PR 1996).
+	* Provide a DNZB response code when no alternate match is found in DNZB query instead of just showing 404
+	* Attempt to fix issue with releases that have parts counters in the searchname not being sent to Sab properly
+	* Declare $client property in nzedb/processing/tv/TMDB.php (PR 1998).
+	* Fix wrong video sample extension in Gamma template (PR 2006).
+	* update_releases.php -> Call to undefined method finfo::close() (PR 2001).
+	* Fix missing table reference from queries in NameFixer (PR 2010).
+
+
+0.5.1 2015-12-07
+Added:
+	* Regexes for korean newsgroups (PR 1868).
+	* Regexes from request thread (PR 1948).
+	* French flag to "multi" releases (PR 1949).
+	* Add TVMaze and TMDB Scrapers (PR 1953).
+	* IMDB Icon to TV new poster wall.
+	* Make NFO file retrievable for a release via the API and update documentation.
+	* include NFOURL (if NFO exists) in extended=1 API information (Issue 1962).
+	* Add changes for API and pager to charisma and omicron templates (PR 1965).
+
+Changed:
+	* Improve games cover view query time.
+	* Improve movies cover view query time
+	* Releases that fail to parse for TV proc go into their own queue for review.
+	* SmartyTV class abstract errors / fix a few template issues.
+	* Cache counts for Movies, Music, Games.
+	* Speedup Music Cover Views and cleanup a lot of the queries.
+	* Speed up Books, Console, and XXX cover views.
+	* If TVDB cannot reach the API, catch the error and force local lookup.
+	* Improvement to Releases' queries.
+	* Re-work books cover view queries to improve performance.
+	* Re-work movies cover view queries to improve performance.
+	* Improve error reporting for API NFO.
+	* Update the alpha API description for NFO. Fixing bad copy paste.
+	* Improve NFO joining operations and reduce overhead.
+	* Remove option to postprocess [only] properly renamed releases from tmux (PR 1964).
+	* Update templates to font-awesome 4.5.0 (PR 1971).
+	* More speed ups to Music, Games, and XXX cover views.
+	* Alter Screen scripts to default to PHP rather than Python scripts (PR 1980).
+	* Remove update TV schedule from screen script (PR 1979).
+
+Fixed:
+	* Remerged Darius' original charisma/omicron themes into next-master. Hopefully this will fix the issues for master, but may need more work yet.
+	* Attempt to fix AEBN / ADM lookups (Issue 1914).
+	* Schema data for countries table using invalid column for private key.
+	* Collection regex errors (Issue 1954).
+	* Fix book related problems due to wrong var used (PR 1952).
+	* Bad logic for airdate shows after cleanup of TV parsing.
+	* First TV name processing Regex not enforcing the start of the string.
+	* Undefined offset and foreach errors in TMDB.
+	* TraktTv abstract errors from missing functions.
+	* Duplicate Alias Errors and cache alias lookups.
+	* Season Packs not showing up correctly in View Series.
+	* Handle XmlException for try/catch on TVDB lookup.
+	* Bad merge broke regex again.
+	* TV name parsing regex.
+	* If episode airdate not set insert null.
+	* Pager template should not round down. Using ceil round up for the last page is a better choice.
+	* Don't cache failed TV lookups when the Episode didn't find a match but the show did.
+	* Fix the dnzb failures part of search query in Releases.php (PR 1968).
+	* Security issues with DnzbFailures.
+	* Queries in DnzbFailures not working properly.
+	* XmlException errors in TVDB not being caught.
+	* Broken DF queries in Releases.
+	* Fix count of failed releases.
+	* Failed counts for cover views being lumped together instead of group_concat.
+	* Fix the full movie view in omicron/charisma templates (PR 1977).
+
+
+0.5.0-1 2015-11-03
 Added:
 
 Changed:
@@ -18,6 +146,7 @@ Fixed:
 	* Attempt to fix Issue 1844, Pager counts not reflecting release availability.
 	* Index name on user series.
 	* Release-edit redirecting to wrong page (Issue 1940).
+	* Collection regex errors.
 
 
 0.5.0 2015-11-02

@@ -28,11 +28,17 @@ class BasePage
 	public $smarty = null;
 
 	public $title = '';
+
 	public $content = '';
+
 	public $head = '';
+
 	public $body = '';
+
 	public $meta_keywords = '';
+
 	public $meta_title = '';
+
 	public $meta_description = '';
 
 	/**
@@ -84,7 +90,7 @@ class BasePage
 	 *
 	 * @var string
 	 */
-	private $theme = 'Default';
+	protected $theme = 'Default';
 
 	/**
 	 * Set up session / smarty / user variables.
@@ -108,6 +114,10 @@ class BasePage
 		$this->smarty->setCompileDir(SMARTY_DIR . 'templates_c/');
 		$this->smarty->setConfigDir(SMARTY_DIR . 'configs/');
 		$this->smarty->setCacheDir(SMARTY_DIR . 'cache/');
+		$this->smarty->setPluginsDir([
+			SMARTY_DIR . 'plugins/',
+			nZEDb_WWW . 'plugins/'
+		]);
 		$this->smarty->error_reporting = ((nZEDb_DEBUG ? E_ALL : E_ALL - E_NOTICE));
 
 		if (isset($_SERVER['SERVER_NAME'])) {
@@ -132,14 +142,6 @@ class BasePage
 			$this->smarty->assign('ismod', 'false');
 			$this->smarty->assign('loggedin', 'false');
 		}
-		
-		// Tell Smarty which directories to use for templates
-		$this->smarty->setTemplateDir(
-				[
-						'user_frontend' => nZEDb_THEMES . $this->theme . '/templates/frontend',
-						'frontend'      => nZEDb_THEMES . 'Default/templates/frontend'
-				]
-		);
 
 		$this->smarty->assign('theme', $this->theme);
 		$this->smarty->assign('site', $this->settings);
@@ -289,7 +291,7 @@ class BasePage
 	{
 		header('HTTP/1.1 503 Service Temporarily Unavailable');
 		exit(
-			sprintf("
+		sprintf("
 				<html>
 					<head>
 						<title>Service Unavailable.</title>
@@ -299,8 +301,8 @@ class BasePage
 						<p>%s</p>
 					</body>
 				</html>",
-				$message
-			)
+			$message
+		)
 		);
 	}
 
@@ -314,10 +316,10 @@ class BasePage
 		}
 		$this->smarty->display($this->page_template);
 	}
-	
+
 	protected function setUserPreferences()
 	{
-		$this->userdata                       = $this->users->getById($this->users->currentUserId());
+		$this->userdata = $this->users->getById($this->users->currentUserId());
 		$this->userdata['categoryexclusions'] = $this->users->getCategoryExclusion($this->users->currentUserId());
 
 		// Change to the user's selected theme, if they selected one, else use the admin set one.
@@ -351,7 +353,7 @@ class BasePage
 		switch ((int)$this->userdata['role']) {
 			case Users::ROLE_ADMIN:
 				$this->smarty->assign('isadmin', 'true');
-			break;
+				break;
 			case Users::ROLE_MODERATOR:
 				$this->smarty->assign('ismod', 'true');
 		}
