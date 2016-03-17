@@ -62,8 +62,12 @@ define('LITHIUM_APP_PATH', realpath(dirname(dirname(__DIR__))));
  * will hold all libraries within the app (as composer would), or the second to use global libraries
  * (manual configuration required) shared by multiple apps.
  */
-//define('LITHIUM_LIBRARY_PATH', dirname(LITHIUM_APP_PATH)) . DS . 'libraries');
-define('LITHIUM_LIBRARY_PATH', realpath(dirname(dirname(LITHIUM_APP_PATH)) . DS . 'libraries'));
+define('LITHIUM_LIBRARY_PATH', dirname(LITHIUM_APP_PATH) . DS . 'libraries');
+//define('LITHIUM_LIBRARY_PATH', realpath(dirname(dirname(LITHIUM_APP_PATH)) . DS . 'libraries'));
+
+if (!defined('nZEDb_ROOT')) {
+	define('nZEDb_ROOT', realpath(dirname(LITHIUM_APP_PATH)) . DS);
+}
 
 /**
  * Locate and load Lithium core library files.  Throws a fatal error if the core can't be found.
