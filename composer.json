@@ -1,21 +1,48 @@
 {
-    "name": "unionofrad/framework",
-    "description": "The li₃ standard distribution, including overarching directory layout, starting application, and a copy of the framework.",
-    "keywords": ["lithium", "li3"],
-    "homepage": "http://li3.me",
-    "license": "BSD-3-Clause",
-    "type": "project",
-    "authors": [
-        {"name": "Union of RAD"},
-        {"name": "The Community"}
-    ],
-    "config": {
-        "vendor-dir": "libraries"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "require": {
-        "php": ">=5.5.0",
-        "unionofrad/lithium": "1.1.*"
+  "authors": [
+    {
+      "name": "nZEDb Team"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "nzedb\\": "nzedb/"
+    },
+    "classmap": [
+      "www/pages/",
+      "libs/pixelead0/Tmdb/",
+      "libs/PEAR/Net_NNTP/NNTP/",
+      "libs/zeebinz/rarinfo/",
+      "libs/"
+    ]
+  },
+  "config": {
+    "vendor-dir": "app/libraries"
+  },
+  "description": "A Usenet Indexer",
+  "homepage": "http://nzedb.com",
+  "keywords": ["lithium", "li3"],
+  "license": "GPL-3.0",
+  "name": "nZEDb/nZEDb",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/kbjr/Git.php"
+    }
+  ],
+  "require": {
+    "barracudanetworks/forkdaemon-php": "^1.0.7",
+    "giantbomb/giantbomb": "@dev",
+    "google/recaptcha": "^1.1.2",
+    "james-heinrich/getid3": "^1.9.12",
+    "joshpinkney/tv-maze-php-api": "@dev",
+    "kbjr/Git.php": "@dev",
+    "moinax/tvdb": "^1.0.4",
+    "php": ">=5.5.0",
+    "phpmailer/phpmailer": "^5.2.14",
+    "smarty/smarty": "^3.1.29",
+    "unionofrad/lithium": "~1.1-dev"
+  },
+  "require-dev": {},
+  "type": "project"
 }
