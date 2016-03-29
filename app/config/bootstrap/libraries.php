@@ -54,7 +54,7 @@
 define('LITHIUM_APP_PATH', realpath(dirname(dirname(__DIR__))));
 
 if (!defined('nZEDb_ROOT')) {
-	define('nZEDb_ROOT', realpath(dirname(dirname(LITHIUM_APP_PATH)) . DS));
+	define('nZEDb_ROOT', realpath(dirname(LITHIUM_APP_PATH)) . DS);
 }
 
 /**
@@ -63,7 +63,7 @@ if (!defined('nZEDb_ROOT')) {
  * directory as your application.  If you use the same libraries in multiple applications, you can
  * set this to a shared path on your server.
  */
-define('LITHIUM_LIBRARY_PATH', nZEDb_ROOT . 'libraries');
+define('LITHIUM_LIBRARY_PATH', nZEDb_ROOT . '/libraries');
 
 /**
  * Locate and load Lithium core library files.  Throws a fatal error if the core can't be found.
